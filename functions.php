@@ -77,6 +77,92 @@ function post_type_registr(){
         // '_builtin'              => false,
         //'update_count_callback' => '_update_post_term_count',
     ] );
+
+
+
+	register_post_type('works', array(
+        'labels'             => array(
+            'name'               => 'works', // Основное название типа записи
+            'singular_name'      => 'works', // отдельное название записи типа Book
+            'add_new'            => 'Добавить работу',
+            'add_new_item'       => 'Добавить новую работу',
+            'edit_item'          => 'Редактирывать работу',
+            'new_item'           => 'Новая работу',
+            'view_item'          => 'Посмотреть работу',
+            'search_items'       => 'Найти работу',
+            'not_found'          =>  'работ не найдено',
+            'parent_item_colon'  => '',
+            'menu_name'          => 'Работы'
+
+          ),
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => true,
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'menu_icon'          => 'dashicons-clipboard',
+        'supports'           => array('title','thumbnail','custom-fields','page-attributes','post-formats'),
+        'show_in_rest'       => true 
+    ) );
+
+
+	register_taxonomy( 'tegs-works', [ 'works' ], [ 
+        'label'                 => '', // определяется параметром $labels->name
+        'labels'                => [
+            'name'              => 'Теги работ',
+            'singular_name'     => 'Теги работ',
+
+            'menu_name'         => 'Теги работ',
+        ],
+        'description'           => '', // описание таксономии
+        'public'                => true,
+        'hierarchical'          => true,
+        'rewrite'               => true,
+        'capabilities'          => array(),
+        'meta_box_cb'           => null, 
+        'show_admin_column'     => false, // авто-создание колонки таксы в таблице ассоциированного типа записи. (с версии 3.5)
+        'show_in_rest'          => null, // добавить в REST API
+        'rest_base'             => null, // $taxonomy
+        // '_builtin'              => false,
+        //'update_count_callback' => '_update_post_term_count',
+    ] );
+
+
+    register_post_type('testimonials', array(
+        'labels'             => array(
+            'name'               => 'testimonials', // Основное название типа записи
+            'singular_name'      => 'testimonials', // отдельное название записи типа Book
+            'add_new'            => 'Добавить отзыв',
+            'add_new_item'       => 'Добавить новый отзыв',
+            'edit_item'          => 'Редактирывать отзыв',
+            'new_item'           => 'Новый отзыв',
+            'view_item'          => 'Посмотреть отзыв',
+            'search_items'       => 'Найти отзыв',
+            'not_found'          =>  'отзывлв не найдено',
+            'parent_item_colon'  => '',
+            'menu_name'          => 'Отзывы'
+
+          ),
+        'public'             => true,
+        'publicly_queryable' => true,
+        'show_ui'            => true,
+        'show_in_menu'       => true,
+        'query_var'          => true,
+        'rewrite'            => true,
+        'capability_type'    => 'post',
+        'has_archive'        => true,
+        'hierarchical'       => false,
+        'menu_position'      => null,
+        'menu_icon'          => 'dashicons-clipboard',
+        'supports'           => array('title','custom-fields','page-attributes','post-formats'),
+        'show_in_rest'       => true 
+    ) );
+
 }
 add_action('init', 'post_type_registr');
 
