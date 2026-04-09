@@ -1,5 +1,214 @@
 <?php
 
+//registration meny
+add_action( 'after_setup_theme', 'theme_register_nav_menu' );
+function theme_register_nav_menu() {
+    register_nav_menu( 'headermeny', 'Header meny' );
+    register_nav_menu( 'footermeny', 'Footer meny' );
+}
+
+/**
+ * Разметка пунктов шапки как в вёрстке: main-menu__item + btn / btn-caption; подменю — submenu.
+ */
+class Kuzmych_Walker_Nav_Menu_Header extends Walker_Nav_Menu {
+
+	private static function toggle_svg() {
+		return '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" version="1.1" viewBox="0 0 20 20"><path d="M19.6,9.6h-3.9c-.4,0-1.8-.2-1.8-.2-.6,0-1.1-.2-1.6-.6-.5-.3-.9-.8-1.2-1.2-.3-.4-.4-.9-.5-1.4,0,0,0-1.1-.2-1.5V.4c0-.2-.2-.4-.4-.4s-.4.2-.4.4v4.4c0,.4-.2,1.5-.2,1.5,0,.5-.2,1-.5,1.4-.3.5-.7.9-1.2,1.2s-1,.5-1.6.6c0,0-1.2,0-1.7.2H.4c-.2,0-.4.2-.4.4s.2.4.4.4h4.1c.4,0,1.7.2,1.7.2.6,0,1.1.2,1.6.6.4.3.8.7,1.1,1.1.3.5.5,1,.6,1.6,0,0,0,1.3.2,1.7v4.1c0,.2.2.4.4.4s.4-.2.4-.4v-4.1c0-.4.2-1.7.2-1.7,0-.6.2-1.1.6-1.6.3-.4.7-.8,1.1-1.1.5-.3,1-.5,1.6-.6,0,0,1.3,0,1.8-.2h3.9c.2,0,.4-.2.4-.4s-.2-.4-.4-.4h0Z"/></svg>';
+	}
+
+	public function start_lvl( &$output, $depth = 0, $args = null ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+		$indent  = str_repeat( $t, $depth );
+		$classes = array( 'submenu' );
+		$class   = esc_attr( implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) ) );
+		$output .= "{$n}{$indent}<ul class=\"{$class}\">{$n}";
+	}
+
+	public function end_lvl( &$output, $depth = 0, $args = null ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+		$indent  = str_repeat( $t, $depth );
+		$output .= "{$indent}</ul>{$n}";
+	}
+
+	public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+		$indent = ( $depth ) ? str_repeat( $t, $depth ) : '';
+
+		$classes   = empty( $item->classes ) ? array() : (array) $item->classes;
+		$classes[] = 'menu-item-' . $item->ID;
+		if ( 0 === (int) $depth ) {
+			$classes[] = 'main-menu__item';
+		} else {
+			$classes[] = 'submenu__item';
+		}
+
+		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
+		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+
+		$id_attr = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth );
+		$id_attr = $id_attr ? ' id="' . esc_attr( $id_attr ) . '"' : '';
+
+		$output .= $indent . '<li' . $id_attr . $class_names . '>';
+
+		$title = apply_filters( 'the_title', $item->title, $item->ID );
+		$title = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
+
+		$has_children = in_array( 'menu-item-has-children', $classes, true );
+
+		if ( 0 === (int) $depth && $has_children ) {
+			$output .= '<div class="main-menu__toggle">';
+			$output .= '<span class="main-menu__link btn btn-anim"><span class="btn-caption">' . esc_html( $title ) . '</span></span>';
+			$output .= self::toggle_svg();
+			$output .= '</div>';
+		} elseif ( 0 === (int) $depth ) {
+			$atts           = array();
+			$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
+			$atts['target'] = ! empty( $item->target ) ? $item->target : '';
+			$atts['rel']    = ! empty( $item->xfn ) ? $item->xfn : '';
+			$atts['href']   = ! empty( $item->url ) ? $item->url : '';
+			$atts['class']  = 'main-menu__link btn btn-anim';
+			$atts           = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
+
+			$attributes = '';
+			foreach ( $atts as $attr => $value ) {
+				if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
+					$value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+					$attributes .= ' ' . $attr . '="' . $value . '"';
+				}
+			}
+			$output .= '<a' . $attributes . '><span class="btn-caption">' . esc_html( $title ) . '</span></a>';
+		} else {
+			$atts           = array();
+			$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
+			$atts['target'] = ! empty( $item->target ) ? $item->target : '';
+			$atts['rel']    = ! empty( $item->xfn ) ? $item->xfn : '';
+			$atts['href']   = ! empty( $item->url ) ? $item->url : '';
+			$atts           = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
+
+			$attributes = '';
+			foreach ( $atts as $attr => $value ) {
+				if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
+					$value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+					$attributes .= ' ' . $attr . '="' . $value . '"';
+				}
+			}
+			$output .= '<a' . $attributes . '>' . esc_html( $title ) . '</a>';
+		}
+	}
+
+	public function end_el( &$output, $item, $depth = 0, $args = null ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$n = '';
+		} else {
+			$n = "\n";
+		}
+		$output .= "</li>{$n}";
+	}
+}
+
+/**
+ * Пункты футера: footer-nav__item anim-uni-in-up + footer-nav__link btn-anim + btn-caption.
+ */
+class Kuzmych_Walker_Nav_Menu_Footer extends Walker_Nav_Menu {
+
+	public function start_lvl( &$output, $depth = 0, $args = null ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+		$indent  = str_repeat( $t, $depth );
+		$classes = array( 'footer-nav__sub' );
+		$class   = esc_attr( implode( ' ', apply_filters( 'nav_menu_submenu_css_class', $classes, $args, $depth ) ) );
+		$output .= "{$n}{$indent}<ul class=\"{$class}\">{$n}";
+	}
+
+	public function end_lvl( &$output, $depth = 0, $args = null ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+		$indent  = str_repeat( $t, $depth );
+		$output .= "{$indent}</ul>{$n}";
+	}
+
+	public function start_el( &$output, $item, $depth = 0, $args = null, $id = 0 ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$t = '';
+			$n = '';
+		} else {
+			$t = "\t";
+			$n = "\n";
+		}
+		$indent = ( $depth ) ? str_repeat( $t, $depth ) : '';
+
+		$classes   = empty( $item->classes ) ? array() : (array) $item->classes;
+		$classes[] = 'menu-item-' . $item->ID;
+		$classes[] = 'footer-nav__item';
+		$classes[] = 'anim-uni-in-up';
+
+		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args, $depth ) );
+		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+
+		$id_attr = apply_filters( 'nav_menu_item_id', 'menu-item-' . $item->ID, $item, $args, $depth );
+		$id_attr = $id_attr ? ' id="' . esc_attr( $id_attr ) . '"' : '';
+
+		$output .= $indent . '<li' . $id_attr . $class_names . '>';
+
+		$title = apply_filters( 'the_title', $item->title, $item->ID );
+		$title = apply_filters( 'nav_menu_item_title', $title, $item, $args, $depth );
+
+		$atts           = array();
+		$atts['title']  = ! empty( $item->attr_title ) ? $item->attr_title : '';
+		$atts['target'] = ! empty( $item->target ) ? $item->target : '';
+		$atts['rel']    = ! empty( $item->xfn ) ? $item->xfn : '';
+		$atts['href']   = ! empty( $item->url ) ? $item->url : '';
+		$atts['class']  = 'footer-nav__link btn-anim';
+		$atts           = apply_filters( 'nav_menu_link_attributes', $atts, $item, $args, $depth );
+
+		$attributes = '';
+		foreach ( $atts as $attr => $value ) {
+			if ( is_scalar( $value ) && '' !== $value && false !== $value ) {
+				$value       = ( 'href' === $attr ) ? esc_url( $value ) : esc_attr( $value );
+				$attributes .= ' ' . $attr . '="' . $value . '"';
+			}
+		}
+		$output .= '<a' . $attributes . '><span class="btn-caption">' . esc_html( $title ) . '</span></a>';
+	}
+
+	public function end_el( &$output, $item, $depth = 0, $args = null ) {
+		if ( isset( $args->item_spacing ) && 'discard' === $args->item_spacing ) {
+			$n = '';
+		} else {
+			$n = "\n";
+		}
+		$output .= "</li>{$n}";
+	}
+}
+
 function post_type_registr(){
     register_post_type('blog', array(
         'labels'             => array(
