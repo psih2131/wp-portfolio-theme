@@ -45,6 +45,10 @@
             <!-- Inner Headline Paragraph & Data Start -->
             <div class="col-12 col-xl-8 mxd-grid-item no-margin">
               <div class="inner-headline__blogtags loading__item">
+
+              <span class="tag tag-default tag-outline tag-link-outline">
+                <a href="<?php echo get_post_type_archive_link('blog'); ?>">Все</a>
+              </span>
                 <?php
                 $blog_categories = get_terms(
                   array(
