@@ -4,12 +4,6 @@
   <head>
     <meta charset="UTF-8">
 
-    <!-- Page Title -->
-    <title>Rayo - Digital Agency & Personal Portfolio HTML Template</title>
-
-    <!-- Meta Tags -->
-    <meta name="description" content="Elevate your digital presence with Rayo - dynamic and stylish HTML template designed for creative agencies and personal brands. With modern layouts, smooth interactions and a polished aesthetic, Rayo template helps showcase projects, services and expertise with clarity and impact.">
-    <meta name="keywords" content="mix_design, resume, portfolio, personal page, cv, template, one page, responsive, html5, css3, creative, clean">
     <meta name="author" content="mix_design">
 
     <!-- Viewport Meta-->
@@ -52,8 +46,8 @@
 
     <!-- Loader Start -->
     <?php 
-	get_template_part('components/preloader'); 	
-	?>
+  	get_template_part('components/preloader'); 	
+  	?>
     <!-- Loader End -->
 
     <!-- Menu & Menu Hamburger Start -->
@@ -146,7 +140,7 @@
     <header id="header" class="mxd-header">
       <!-- header logo -->
       <div class="mxd-header__logo loading__fade">
-        <a href="index-main.html" class="mxd-logo">
+        <a href="<?php echo home_url(); ?>" class="mxd-logo">
           <!-- logo icon -->
           <svg class="mxd-logo__image" version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" viewBox="0 0 56 56" style="enable-background:new 0 0 56 56;" xml:space="preserve">
             <style type="text/css">
@@ -189,7 +183,7 @@
       <!-- header controls -->
       <div class="mxd-header__controls loading__fade">
         <button id="color-switcher" class="mxd-color-switcher" type="button" role="switch" aria-label="light/dark mode" aria-checked="true"></button>
-        <a class="btn btn-anim btn-default btn-mobile-icon btn-outline slide-right-up" href="contact.html">
+        <a class="btn btn-anim btn-default btn-mobile-icon btn-outline slide-right-up" href="<?php echo home_url(); ?>/kontakty/">
           <span class="btn-caption"><?php the_field('header_tekst_knopki', 'option'); ?></span>
           <i class="ph-bold ph-arrow-up-right"></i>
         </a>

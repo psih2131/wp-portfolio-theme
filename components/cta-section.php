@@ -17,7 +17,7 @@
 	            <!-- Let's talk about your project! -->
 	          </p>
 	          <div class="mxd-promo__controls anim-uni-in-up">
-	            <a class="btn btn-anim btn-default btn-large btn-additional slide-right-up" href="contact.html">
+	            <a class="btn btn-anim btn-default btn-large btn-additional slide-right-up" href="/kontakty/">
 	              <span class="btn-caption">Оставить заявку</span>
 	              <i class="ph-bold ph-arrow-up-right"></i>
 	            </a>
