@@ -749,7 +749,8 @@ Template Name: Home
       while ( have_rows('sekcziya_5_-_vse_servisy') ) : the_row();
       ?>
 
-      <section class="mxd-section overflow-hidden padding-grid-pre-mtext">
+      <!-- Section - Approach and Philosophy Start -->
+      <section class="mxd-section padding-pre-grid">
         <div class="mxd-container grid-container">
 
           <!-- Block - Section Title Start -->
@@ -777,75 +778,61 @@ Template Name: Home
           </div>
           <!-- Block - Section Title End -->
 
-          <!-- Block - Projects List #01 Start -->
+          <!-- Block - Approach and Philosophy List Start -->
           <div class="mxd-block">
-            <div class="mxd-projects-list hover-reveal">
-              <!-- item -->
-              <?php
-              //ПОВТОРИТЕЛЬ ACF
-              $counter = 0;
-              if( have_rows('spisok_servisov') ):
-              while ( have_rows('spisok_servisov') ) : the_row();
-              $counter++;
-              $image = get_sub_field('izobrazhenie');
-              ?>
+            <div class="mxd-approach-list">
 
-              <a class="mxd-projects-list__item hover-reveal__item" >
-                <div class="mxd-projects-list__border anim-uni-in-up"></div>
-                <div class="hover-reveal__content hover-reveal-280x340">
-                  <img class="hover-reveal__image" src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" />
-                </div>
-                <div class="mxd-projects-list__inner">
+            <?php
+            //ПОВТОРИТЕЛЬ ACF
+            if( have_rows('spisok_servisov') ):
+            while ( have_rows('spisok_servisov') ) : the_row();
+            $image = get_sub_field('izobrazhenie');
+            ?>
+
+            
+            <!-- item -->
+            <div class="mxd-approach-list__item">
+                <div class="mxd-approach-list__border anim-uni-in-up"></div>
+                <div class="mxd-approach-list__inner">
                   <div class="container-fluid px-0">
                     <div class="row gx-0">
-                      <div class="col-12 col-xl-8 mxd-grid-item no-margin">
-                        <div class="mxd-projects-list__title anim-uni-in-up">
-                          <div class="mxd-projects-list__icon">
-                            <i class="ph ph-arrow-right"></i>
-                          </div>
-                          <p><?php the_sub_field('nazvanie'); ?></p>
-                        </div>
-                        <div class="mxd-projects-list__image anim-uni-in-up">
-                          <img src="https://dummyimage.com/1200x800/4d4d4d/838383" alt="Project Preview">
+                      <div class="col-12 col-xl-2 mxd-grid-item no-margin">
+                        <div class="mxd-approach-list__image anim-uni-in-up">
+                          <img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt']; ?>" />
                         </div>
                       </div>
-                      <div class="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
-                        <div class="mxd-projects-list__tagslist">
-                          <ul>
-                            <li class="anim-uni-in-up">
-                              <p class="t-small"><?php the_sub_field('opisanie'); ?></p>
-                            </li>
-                            <!-- <li class="anim-uni-in-up">
-                              <p class="t-small">Development</p>
-                            </li> -->
-                          </ul>
+                      <div class="col-12 col-xl-4 mxd-grid-item no-margin">
+                        <div class="mxd-approach-list__title anim-uni-in-up">
+                          <h6><?php the_sub_field('nazvanie'); ?></h6>
                         </div>
-                        
                       </div>
-                      <div class="col-6 col-md-6 col-xl-2 mxd-grid-item no-margin">
-                        <div class="mxd-projects-list__date anim-uni-in-up">
-                          <p class="t-small"><?php echo $counter; ?></p>
+                      <div class="col-12 col-xl-6 mxd-grid-item no-margin">
+                        <div class="mxd-approach-list__descr anim-uni-in-up">
+                          <p><?php the_sub_field('opisanie'); ?></p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="mxd-projects-list__border anim-uni-in-up"></div>
-              </a>
+                <div class="mxd-approach-list__border anim-uni-in-up"></div>
+              </div>
 
-              <?php
-              endwhile;
-              else :
-              // вложенных полей не найдено
-              endif;
-              ?>
+            <?php
+            endwhile;
+            else :
+            // вложенных полей не найдено
+            endif;
+            ?>
+
               
+
             </div>
           </div>
-          <!-- Block - Projects List #01 End -->
+          <!-- Block - Approach and Philosophy List Start -->
 
         </div>
       </section>
+      <!-- Section - Approach and Philosophy End -->
 
       <?php
       endwhile;
@@ -853,6 +840,8 @@ Template Name: Home
       // вложенных полей не найдено
       endif;
       ?>
+
+
 
       <!-- Section - Projects List #01 End -->
 
@@ -1075,61 +1064,143 @@ Template Name: Home
       <!-- Section - Statistics Simple End -->
 
 
-      <!-- Section - Testimonials Slider #03 Start -->
-      <section class="mxd-section overflow-hidden padding-default">
-        <div class="mxd-container grid-container">
-          <!-- Block - Testimonials Slider #03 Start -->
+    
+
+
+
+      <!-- Section - Testimonials Slider #01 Start -->
+      <?php
+      //ПОВТОРИТЕЛЬ ACF
+      if( have_rows('sekcziya_9_-_otzyvy') ):
+      while ( have_rows('sekcziya_9_-_otzyvy') ) : the_row();
+      ?>
+
+
+      <section class="mxd-section padding-grid-pre-mtext">
+        <div class="mxd-container no-padding-container">
+
+          <!-- Block - Testimonials Slider #01 with Section Title Start -->
           <div class="mxd-block">
-            <div class="testimonials-slider-2 no-padding">
-              <!-- slider main container -->
-              <div class="swiper-testimonials-2 no-padding">
-                <!-- additional required wrapper -->
-                <div class="swiper-wrapper">
-                  <!-- single slide -->
-
-                  <?php
-                  //ВЫВОД ЗАПИСЕЙ АСF
-                  $post_objects = get_field('raboty_spisok_otzyvov','options');
-                  if( $post_objects ): ?>
-                  <?php foreach( $post_objects as $post): // Переменная должна быть названа обязательно $post (IMPORTANT) ?>
-                  <?php setup_postdata($post); ?>
-
-                  <?php 
-                  //form-done-popup component
-                  get_template_part('components/testimonials-slider-card'); 
-                  ?>
-
-                  <?php endforeach; ?>
-
-                  <?php wp_reset_postdata(); // ВАЖНО - сбросьте значение $post object чтобы избежать ошибок в дальнейшем коде ?>
-                  <?php endif;
-
-                  ?>
-
+            <div class="container-fluid px-0">
+              <div class="row gx-0">
+                <div class="col-12 col-xl-5">
+    
+                  <!-- Additional Container Start -->
+                  <div class="mxd-container grid-container">
+                    <div class="mxd-block">
+    
+                      <!-- Section Title Start -->
+                      <div class="mxd-section-title no-margin-desktop">
+                        <div class="container-fluid p-0">
+                          <div class="row g-0">
+                            <div class="col-12 mxd-grid-item no-margin">
+                              <div class="mxd-section-title__title anim-uni-ijkbn-up">
+                                <h2 class="reveal-type"><?php the_sub_field('zagolovok'); ?></h2>
+                              </div>
+                            </div>
+                            <div class="col-12 mxd-grid-item no-margin">
+                              <div class="mxd-section-title__descr">
+                                <p class="anim-uni-in-up"><?php the_sub_field('podzagolovok'); ?></p>
+                              </div>
+                            </div>
+                
+                          </div>
+                        </div>
+                      </div>
+                      <!-- Section Title Start -->
+    
+                    </div>
+                  </div>
+                  <!-- Additional Container End -->
                   
-        
-              </div>
-                <!-- navigation buttons -->
-                <div class="swiper-testimonials__controls">
-                  <div class="swiper-button-prev mxd-slider-btn mxd-slider-btn-round-prev">
-                    <a class="btn btn-round btn-round-small btn-outline slide-left anim-no-delay" href="#0">
-                      <i class="ph ph-arrow-left"></i>
-                    </a> 
+                </div>
+                <div class="col-12 col-xl-7">
+
+                  <!-- Testimonials Slider Start -->
+                  <div class="testimonials-slider overflow-hidden anim-uni-in-up">
+                    <!-- slider main container -->
+                    <div class="swiper-testimonials">
+                      <!-- additional required wrapper -->
+                      <div class="swiper-wrapper">
+
+                      <?php
+                      //ВЫВОД ЗАПИСЕЙ АСF
+                      $post_objects = get_field('raboty_spisok_otzyvov','options');
+                      if( $post_objects ): ?>
+                      <?php foreach( $post_objects as $post): // Переменная должна быть названа обязательно $post (IMPORTANT) ?>
+                      <?php setup_postdata($post); ?>
+
+                 
+                       <!-- single slide -->
+                       <div class="swiper-slide">
+                          <div class="mxd-testimonials-card bg-base-tint radius-m">
+                            <div class="mxd-testimonials-card__content">
+                              <div class="mxd-testimonials-card__media anim-uni-in-up">
+                                <div class="mxd-testimonials-card__photo">
+                                  <img src="<?php the_field('foto'); ?>" alt="Author Photo">
+                                </div>
+                                <div class="mxd-testimonials-card__company">
+                                  <!-- <img src="img/brands/envato.svg" alt="Company Logo"> -->
+                                </div>
+                              </div>
+                              <div class="mxd-testimonials-card__text">
+                                <p class="anim-uni-in-up"><?php the_field('tekst_otzyva'); ?></p>
+                                  <a class="btn btn-anim btn-default btn-small btn-outline slide-right-up anim-uni-in-up" href="<?php the_field('ssylka_na_proekt'); ?>">
+                                    <span class="btn-caption">Project Page</span>
+                                    <i class="ph ph-arrow-up-right"></i>
+                                  </a>
+                              </div>
+                            </div>
+                            <div class="mxd-testimonials-card__author">
+                              <h5 class="mxd-testimonials-card__name anim-uni-in-up"><?php the_field('imya'); ?></h5>
+                              <p class="mxd-testimonials-card__position t-small anim-uni-in-up"><?php the_field('opisanie'); ?>
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                      <?php endforeach; ?>
+
+                      <?php wp_reset_postdata(); // ВАЖНО - сбросьте значение $post object чтобы избежать ошибок в дальнейшем коде ?>
+                      <?php endif;
+
+                      ?>
+
+                      </div>
+                      <!-- navigation buttons -->
+                      <div class="swiper-button-prev mxd-slider-btn mxd-slider-btn-round-prev animate-card-2">
+                        <a class="btn btn-round btn-round-small btn-outline slide-left anim-no-delay" href="#0">
+                          <i class="ph ph-arrow-left"></i>
+                        </a> 
+                      </div>
+                      <div class="swiper-button-next mxd-slider-btn mxd-slider-btn-round-next animate-card-2">
+                        <a class="btn btn-round btn-round-small btn-outline slide-right anim-no-delay" href="#0">
+                          <i class="ph ph-arrow-right"></i>
+                        </a> 
+                      </div>
+                    </div>
+                    <div class="testimonials-slider__shadow"></div>
                   </div>
-                  <div class="swiper-pagination mxd-swiper-pagination-fraction"></div>
-                  <div class="swiper-button-next mxd-slider-btn mxd-slider-btn-round-next">
-                    <a class="btn btn-round btn-round-small btn-outline slide-right anim-no-delay" href="#0">
-                      <i class="ph ph-arrow-right"></i>
-                    </a> 
-                  </div>
+                  <!-- Testimonials Slider End -->
+
                 </div>
               </div>
             </div>
           </div>
-          <!-- Block - Testimonials Slider #03 End -->
+          <!-- Block - Testimonials Slider #01 with Section Title Start -->
+
         </div>
       </section>
-      <!-- Section - Testimonials Slider #03 End -->
+
+      <?php
+      endwhile;
+      else :
+      // вложенных полей не найдено
+      endif;
+      ?>
+      
+      <!-- Section - Testimonials Slider #01 End -->
+
 
       <!-- Section - Blog Preview Start -->
       <?php
