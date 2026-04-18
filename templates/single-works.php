@@ -178,6 +178,30 @@
 
   <?php
   }
+  elseif( get_row_layout() == 'видео' ){
+  ?>
+
+     <!-- Section - Parallax Divider Start -->
+     <div class="mxd-section padding-grid-pre-mtext">
+        <div class="mxd-container mxd-container-video">
+          <div class="mxd-divider">
+            <div class="mxd-divider__video">
+              <video class="video " preload="auto" autoplay="autoplay" loop="loop" muted="muted" poster="<?php the_sub_field('prevyu'); ?>">
+                <source type="video/mp4" src="<?php the_sub_field('video_fajl'); ?>">
+                <!-- <source type="video/webm" src="video/1920x1080_video.webm">
+                <source type="video/ogv" src="video/1920x1080_video.ogv"> -->
+              </video>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Section - Parallax Divider End -->
+
+
+
+  <?php
+  }
+
   elseif( get_row_layout() == 'галерея' ){
 
   ?>

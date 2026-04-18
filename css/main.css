@@ -1215,6 +1215,7 @@ html.lenis, html.lenis body {
   .mxd-section-inner-headline.padding-s-text-pre-block {
     padding-bottom: 8.8rem;
   }
+
 }
 
 .mxd-section-fullscreen {
@@ -1236,6 +1237,11 @@ html.lenis, html.lenis body {
   padding: 0 3rem;
   margin: 0 auto;
 }
+
+.mxd-container-video{
+  padding: 1.5rem;
+}
+
 .mxd-container.fullwidth-container {
   max-width: none;
   padding: 0;
@@ -1255,7 +1261,10 @@ html.lenis, html.lenis body {
 }
 @media only screen and (min-width: 768px) {
   .mxd-container {
-    padding: 0 6rem;
+    padding: 0 1.5rem;
+  }
+  .mxd-container-video{
+    padding: 1.5rem;
   }
   .mxd-container.grid-container {
     padding: 0 4.5rem;
@@ -1275,6 +1284,9 @@ html.lenis, html.lenis body {
 @media only screen and (min-width: 1600px) {
   .mxd-container {
     padding: 0 9rem;
+  }
+  .mxd-container-video{
+    padding: 0;
   }
   .mxd-container.grid-container {
     padding: 0 7.5rem;
